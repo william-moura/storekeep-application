@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Products\Domain\Entities;
+namespace Src\Products\Domain\Entities;
 
-use App\Products\Domain\ValueObjects\SKU;
-use App\Products\Domain\ValueObjects\Price;
+use Src\Products\Domain\ValueObjects\SKU;
+use Src\Products\Domain\ValueObjects\Price;
 
 class ProductVariant
 {
@@ -13,7 +13,6 @@ class ProductVariant
     private Price $price;
     private string $color;
     private string $size;
-
     private int $stockQuantity;
     private ?string $description;
 }

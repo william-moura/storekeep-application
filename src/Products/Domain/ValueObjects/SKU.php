@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Products\Domain\ValueObjects;
+namespace Src\Products\Domain\ValueObjects;
 
 use InvalidArgumentException;
 
@@ -16,6 +16,10 @@ class SKU
         $this->code = strtoupper(trim($code));
     }
     public function getCode(): string
+    {
+        return $this->code;
+    }
+    public function toString(): string
     {
         return $this->code;
     }
