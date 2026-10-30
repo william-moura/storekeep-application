@@ -13,3 +13,7 @@ Route::get('/criar-empresa/{slug}', function ($slug) {
 
     return "Tenant {$slug} criado com sucesso!";
 });
+
+Route::get('/teste-api', function () {
+    return 'This is your multi-tenant application. The id of the current tenant is william' ;
+});
