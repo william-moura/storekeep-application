@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
 use Src\Products\Infrastructure\Http\Controllers\CreateProductController;
+use Src\Products\Infrastructure\Http\Controllers\ListProductsController;
 use Stancl\Tenancy\Database\Models\Tenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
 use Stancl\Tenancy\Middleware\PreventAccessFromCentralDomains;
@@ -37,7 +38,8 @@ Route::middleware([
 ->prefix('api')
 ->group(function () {
     Route::get('/teste-api', function () {
-        return 'This is your multi-tenant application. The id of the current tenant is ' . tenant('id');
+        return 'This is your multi-tenant application. The id of the current tenant iss ' . tenant('id');
     });
     Route::post('/products', CreateProductController::class)->name('products.create');
+    Route::get('/products', ListProductsController::class)->name('products.list');
 });
