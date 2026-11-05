@@ -10,8 +10,7 @@ class CreateProductRequest extends FormRequest
     {
         return [
             'name' => 'required|string|max:255',
-            'description' => 'required|string|max:255',
-            'price' => 'required|numeric',
+            'description' => 'required|string|max:255',            
         ];
     }
 

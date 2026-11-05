@@ -45,7 +45,11 @@ return [
          * Connection used as a "template" for the dynamically created tenant database connection.
          * Note: don't name your template connection tenant. That name is reserved by package.
          */
-        'template_tenant_connection' => null,
+        'template_tenant_connection' => 'tenant',
+
+        'database_names' => [
+            'mysql' => 'tenant_%tenant_id%',
+        ],
 
         /**
          * Tenant database names are created like this:
@@ -195,6 +199,6 @@ return [
      */
     'seeder_parameters' => [
         '--class' => 'DatabaseSeeder', // root seeder class
-        // '--force' => true, // This needs to be true to seed tenant databases in production
+        '--force' => true, // This needs to be true to seed tenant databases in production
     ],
 ];

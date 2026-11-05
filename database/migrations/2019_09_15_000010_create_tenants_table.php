@@ -19,7 +19,7 @@ class CreateTenantsTable extends Migration
             $table->string('id')->primary();
             $table->string('company_name');
             $table->string('email')->nullable();
-            $table->string('cnpj')->nullable();
+            $table->date('expiration_date')->nullable();
 
             // your custom columns may go here
 

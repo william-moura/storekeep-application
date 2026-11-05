@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Model;
 use Stancl\Tenancy\Database\Models\Tenant as BaseTenant;
 use Stancl\Tenancy\Contracts\TenantWithDatabase;
 use Stancl\Tenancy\Database\Concerns\HasDatabase;
@@ -13,6 +12,12 @@ class Tenant extends BaseTenant implements TenantWithDatabase
     use HasDatabase, HasDomains;
 
     protected $guarded = [];
+    protected $table = 'tenants';
+    protected $fillable = [
+        'company_name',
+        'email',
+        'expiration_date',
+    ];
 
     public function user()
     {
@@ -24,7 +29,8 @@ class Tenant extends BaseTenant implements TenantWithDatabase
         return [
             'id',
             'company_name',
-            'email',            
+            'email',
+            'expiration_date',
         ];
     }
 }

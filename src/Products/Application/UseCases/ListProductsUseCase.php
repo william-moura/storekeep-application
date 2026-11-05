@@ -16,9 +16,8 @@ class ListProductsUseCase
             $perPage = $dto->perPage ?? 10;
             if ($perPage <= 0) {
                 $perPage = 10;
-            }
-            return $this->repository->paginate($dto->search, $dto->page, $perPage);
+            }            
         }
-        return $this->repository->findAll();
+        return $this->repository->paginate($dto->search, $dto->page, $perPage);        
     }
 }
