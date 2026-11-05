@@ -35,4 +35,12 @@ class ProductRepository implements ProductRepositoryInterface
             return new Product($product->id, $product->name, $product->description);
         })->toArray();
     }
+    public function paginate(string $search = '', int $page = 1, int $perPage = 10): array
+    {
+        return ProductModel::where('name', 'like', "%$search%")
+            ->paginate($perPage, ['*'], 'page', $page)
+            ->map(function ($product) {
+                return new Product($product->id, $product->name, $product->description);
+            })->toArray();
+    }
 }

@@ -11,4 +11,5 @@ interface ProductRepositoryInterface
     public function delete(Product $product): void;
     public function findById(string $id): ?Product;
     public function findAll(): array;
+    public function paginate(string $search = '', int $page = 1, int $perPage = 10): array;
 }
