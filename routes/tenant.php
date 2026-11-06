@@ -3,7 +3,10 @@
 declare(strict_types=1);
 
 use Illuminate\Support\Facades\Route;
+use Src\Products\Infrastructure\Http\Controllers\CreateAttributeController;
+use Src\Products\Infrastructure\Http\Controllers\CreateAttributeValueController;
 use Src\Products\Infrastructure\Http\Controllers\CreateProductController;
+use Src\Products\Infrastructure\Http\Controllers\ListAttributesController;
 use Src\Products\Infrastructure\Http\Controllers\ListProductsController;
 use Stancl\Tenancy\Database\Models\Tenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -40,6 +43,11 @@ Route::middleware([
     Route::get('/teste-api', function () {
         return 'This is your multi-tenant application. The id of the current tenant iss ' . tenant('id');
     });
-    Route::post('/products', CreateProductController::class)->name('products.create');
-    Route::get('/products', ListProductsController::class)->name('products.list');
+    Route::group(['prefix' => 'products'], function () {
+        Route::post('/', CreateProductController::class)->name('products.create');
+        Route::get('/', ListProductsController::class)->name('products.list');
+        Route::post('/attributes', CreateAttributeController::class)->name('products.attributes.create');
+        Route::get('/attributes', ListAttributesController::class)->name('products.attributes.list');
+        Route::post('/attributes/values', CreateAttributeValueController::class)->name('products.attributes.values.create');
+    });
 });

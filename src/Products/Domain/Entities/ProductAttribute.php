@@ -12,7 +12,7 @@ final class ProductAttribute
 
     public function __construct(
         public readonly string $id,
-        private string $name // ex: "Cor", "Tamanho", "Voltagem"
+        public string $name // ex: "Cor", "Tamanho", "Voltagem"
     ) {
         if (empty(trim($name))) {
             throw new InvalidArgumentException("O nome do atributo não pode ser vazio.");
@@ -36,7 +36,7 @@ final class ProductAttribute
 
         $attributeValue = new ProductAttributeValue(
             id: $valueId,
-            attributeName: $this->name,
+            attributeId: $this->id,
             value: $valueName
         );
 
@@ -51,5 +51,13 @@ final class ProductAttribute
     public function getValues(): array
     {
         return $this->values;
+    }
+
+    public function toArray(): array
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+        ];
     }
 }

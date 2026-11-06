@@ -2,15 +2,50 @@
 
 namespace Src\Products\Infrastructure\Persistence\Repositories;
 
+use Src\Products\Domain\Entities\ProductAttributeValue;
+use Src\Products\Domain\Entities\ProductSku;
 use Src\Products\Domain\Repositories\ProductRepositoryInterface;
+use Src\Products\Domain\ValueObjects\Ean;
+use Src\Products\Domain\ValueObjects\Price;
+use Src\Products\Domain\ValueObjects\SKU;
 use Src\Products\Infrastructure\Persistence\Models\Product as ProductModel;
 use Src\Products\Domain\Entities\Product;
 
 class ProductRepository implements ProductRepositoryInterface
 {
-    public function create(Product $product): void
+    public function create(Product $product): Product
     {
-        ProductModel::create($product->toArray());
+        $productModel = ProductModel::create($product->toArray());
+        foreach ($product->getSkus() as $sku) {
+            $skuModel = $productModel->skus()->create([
+                'id' => $sku->id,
+                'sku_code' => $sku->getSkuCode()->getCode(),
+                'ean' => $sku->getEan()->toString(),
+                'price' => $sku->getPrice(),
+                'stock' => $sku->getStock(),                
+            ]);
+            if (!empty($sku->getAttributeValues())) {
+                
+                $skuModel->attributeValues()->sync($sku->getAttributeValues());
+            }
+        }
+        return new Product(
+            id: $productModel->id,
+            name: $productModel->name,
+            description: $productModel->description,
+            // skus: array_map(function ($sku) {
+            //     return new ProductSku(
+            //         id: $sku->id,
+            //         skuCode: new SKU($sku->sku_code),
+            //         ean: new Ean($sku->ean),
+            //         price: new Price($sku->price, 'BRL'),
+            //         stock: $sku->stock,
+            //         attributeValues: array_map(function ($attributeValue) {
+            //             return new ProductAttributeValue($attributeValue->id, $attributeValue->attribute_id, $attributeValue->value);
+            //         }, $sku->attributeValues),
+            //     );
+            // }, $productModel->skus),
+        );
     }
 
     public function update(Product $product): void

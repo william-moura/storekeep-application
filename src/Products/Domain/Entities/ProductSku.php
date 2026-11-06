@@ -9,8 +9,6 @@ use Src\Products\Domain\ValueObjects\SKU;
 
 final class ProductSku
 {
-    /** @var ProductAttributeValue[] */
-    private array $attributeValues = [];
 
     /** @var ProductImage[] */
     private array $images = [];
@@ -20,9 +18,10 @@ final class ProductSku
         private SKU $skuCode,
         private Ean $ean,
         private Price $price,
-        private int $stock
+        private int $stock,
+        private array $attributeValues = [],
     ) {
-        if ($price < 0) {
+        if ($price->getAmount() < 0) {
             throw new InvalidArgumentException("O preço do SKU não pode ser negativo.");
         }
         if ($stock < 0) {

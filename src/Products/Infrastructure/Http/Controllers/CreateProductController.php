@@ -18,7 +18,7 @@ class CreateProductController extends Controller
      */
     public function __invoke(CreateProductRequest $request): JsonResponse
     {
-        $dto = CreateProductDto::fromRequest($request);
+        $dto = CreateProductDto::fromRequest($request);        
         return response()->json($this->createProductUseCase->execute($dto));
     }
 }
