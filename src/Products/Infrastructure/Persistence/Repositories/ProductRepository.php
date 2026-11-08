@@ -16,13 +16,14 @@ class ProductRepository implements ProductRepositoryInterface
     public function create(Product $product): Product
     {
         $productModel = ProductModel::create($product->toArray());
+        
         foreach ($product->getSkus() as $sku) {
             $skuModel = $productModel->skus()->create([
                 'id' => $sku->id,
                 'sku_code' => $sku->getSkuCode()->getCode(),
                 'ean' => $sku->getEan()->toString(),
                 'price' => $sku->getPrice(),
-                'stock' => $sku->getStock(),                
+                'stock' => $sku->getStock(),
             ]);
             if (!empty($sku->getAttributeValues())) {
                 

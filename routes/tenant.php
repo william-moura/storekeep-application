@@ -7,6 +7,7 @@ use Src\Products\Infrastructure\Http\Controllers\CreateAttributeController;
 use Src\Products\Infrastructure\Http\Controllers\CreateAttributeValueController;
 use Src\Products\Infrastructure\Http\Controllers\CreateProductController;
 use Src\Products\Infrastructure\Http\Controllers\ListAttributesController;
+use Src\Products\Infrastructure\Http\Controllers\ListAttributeValuesController;
 use Src\Products\Infrastructure\Http\Controllers\ListProductsController;
 use Stancl\Tenancy\Database\Models\Tenant;
 use Stancl\Tenancy\Middleware\InitializeTenancyByDomain;
@@ -49,5 +50,6 @@ Route::middleware([
         Route::post('/attributes', CreateAttributeController::class)->name('products.attributes.create');
         Route::get('/attributes', ListAttributesController::class)->name('products.attributes.list');
         Route::post('/attributes/values', CreateAttributeValueController::class)->name('products.attributes.values.create');
+        Route::get('/attributes/values', ListAttributeValuesController::class)->name('products.attributes.values.list');
     });
 });

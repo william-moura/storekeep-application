@@ -7,6 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Product extends Model
 {
     protected $table = 'products';
+    protected $primaryKey = 'id';
+    public $incrementing = false;
+    protected $keyType = 'string';
+
+    protected $casts = [
+        'id' => 'string',
+    ];
 
     protected $fillable = [
         'id',
@@ -16,6 +23,6 @@ class Product extends Model
 
     public function skus()
     {
-        return $this->hasMany(ProductSku::class, 'product_id', 'id');
+        return $this->hasMany(ProductSku::class, 'product_id');
     }
 }

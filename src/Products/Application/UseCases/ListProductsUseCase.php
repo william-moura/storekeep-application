@@ -12,12 +12,19 @@ class ListProductsUseCase
     ) {}
     public function execute(ListProductDTO $dto): array
     {
+        $perPage = 10;
         if ($dto->page !== null) {
             $perPage = $dto->perPage ?? 10;
             if ($perPage <= 0) {
                 $perPage = 10;
             }            
         }
-        return $this->repository->paginate($dto->search, $dto->page, $perPage);        
+        $products = $this->repository->paginate($dto->search, $dto->page, $perPage);        
+        return [
+            'data' => $products->items(),
+            'total' => $products->total(),
+            'page' => $products->currentPage(),
+            'perPage' => $products->perPage(),
+        ];
     }
 }
