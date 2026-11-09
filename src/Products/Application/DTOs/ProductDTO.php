@@ -3,6 +3,7 @@
 namespace Src\Products\Application\DTOs;
 
 use Src\Products\Domain\Entities\Product;
+use Src\Products\Infrastructure\Persistence\Models\Product as ProductModel;
 
 class ProductDTO
 {
@@ -18,9 +19,18 @@ class ProductDTO
         return new self(
             name: $product->getName(),
             description: $product->getDescription(),
-            price: $product->getSku()->getPrice()->getValue(),
-            stock: $product->getSku()->getStock(),
+            price: $product->getSkus()[0]->getPrice(),
+            stock: $product->getStockTotal(),
         );
     }
-    
+    public static function fromModel(ProductModel $product): self
+    {
+        dd($product);
+        return new self(
+            name: $product->name,
+            description: $product->description,
+            price: $product->skus[0]->price,
+            stock: $product->stock,
+        );
+    }
 }

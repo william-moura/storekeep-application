@@ -78,4 +78,9 @@ final class Product
             'description' => $this->description,
         ];
     }
+
+    public function getStockTotal(): int
+    {
+        return array_sum(array_map(fn (ProductSku $sku) => $sku->getStock(), $this->skus));
+    }
 }
